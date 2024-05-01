@@ -24,7 +24,7 @@ void Chassis::updateOdom() {
     }
 
     Point verticalVector(verticalTravel * sin(theta), verticalTravel * cos(theta));
-    Point horizontalVector(horizontalTravel * sin(theta + M_PI / 4), horizontalTravel * cos(theta + M_PI / 4));
+    Point horizontalVector(horizontalTravel * sin(theta + M_PI / 2), horizontalTravel * cos(theta + M_PI / 2));
 
     Point origin = pos.get();
 
