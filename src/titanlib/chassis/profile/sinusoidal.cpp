@@ -1,5 +1,6 @@
 #include "titanlib/chassis/profile/sinusoidal.hpp"
 
+//ALL UNITS ARE IN IN/S AND IN/S/S
 namespace titanlib {
 
 SinusoidalProfile::SinusoidalProfile(float totalTime, float distance) {
