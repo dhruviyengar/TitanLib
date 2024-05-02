@@ -14,12 +14,12 @@ void Chassis::updateOdom() {
         float radius = (left + right) / 2;
         verticalTravel = 2 * radius * sin(deltaTheta / 2);
     } else {
-        float radius = vertWheel->getDistanceTravelled() / deltaTheta;
+        float radius = (vertWheel->getDistanceTravelled() / deltaTheta) - vertWheel->getHorizontalOffset() * sgn(deltaTheta);
         verticalTravel = 2 * radius * sin(deltaTheta / 2);
     }
 
     if (horzWheel != nullptr) {
-        float radius = horzWheel->getDistanceTravelled() / deltaTheta;
+        float radius = horzWheel->getDistanceTravelled() / deltaTheta - horzWheel->getVerticalOffset() * sgn(deltaTheta);
         horizontalTravel = 2 * radius * sin(deltaTheta / 2);
     }
 
