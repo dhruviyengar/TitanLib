@@ -131,4 +131,14 @@ float CubicBezier::arcLength(float startT, float endT) {
   return length;
 }
 
+float CubicBezier::getCurvature(float t) {
+  float derivX = getXDerivative(t);
+  float derivY = getYDerivative(t);
+  float secDerivX = getXSecondDerivative(t);
+  float secDerivY = getYSecondDerivative(t);
+  float num = derivX * secDerivY - secDerivX * derivY;
+  float dem = powf((derivX * derivX) + (derivY * derivY), 1.5);
+  return num / dem;
+}
+
 } // namespace titanlib

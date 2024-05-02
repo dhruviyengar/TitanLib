@@ -19,6 +19,7 @@ public:
   float getSlope(float t);
   float closestPoint(Point point, float initialGuess, float tolerance);
   float arcLength(float startT, float endT);
+  float getCurvature(float t);
 
 private:
   Point start = Point(0, 0);
