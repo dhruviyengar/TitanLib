@@ -7,6 +7,7 @@ namespace titanlib {
 
 class Point {
 public:
+  Point();
   Point(float x, float y);
   float distance(Point other);
   float angle(Point other);
