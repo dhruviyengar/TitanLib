@@ -10,6 +10,7 @@ class TrapezoidalProfile : public MotionProfile {
         TrapezoidalProfile(float maxAccel, float maxVel, float distance);
         float getPosition(float time) override;
         float getVelocity(float time) override;
+        float getTotalTime() override;
 
     private:
         float maxAccel;

@@ -41,4 +41,8 @@ float TrapezoidalProfile::getVelocity(float time) {
   }
 }
 
+float TrapezoidalProfile::getTotalTime() {
+    return 2 * accelTime + cruiseTime;
+}
+
 } // namespace titanlib

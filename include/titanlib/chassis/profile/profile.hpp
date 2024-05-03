@@ -8,6 +8,7 @@ namespace titanlib {
             MotionProfile();
             virtual float getPosition(float time);
             virtual float getVelocity(float time);
+            virtual float getTotalTime();
 
 
     };

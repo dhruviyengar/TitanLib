@@ -26,4 +26,8 @@ float SinusoidalProfile::getVelocity(float time) {
     }
 }
 
+float SinusoidalProfile::getTotalTime() {
+    return totalTime;
+}
+
 }

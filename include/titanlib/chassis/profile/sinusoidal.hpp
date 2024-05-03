@@ -10,6 +10,7 @@ public:
   SinusoidalProfile(float totalTime, float distance);
   float getPosition(float time) override;
   float getVelocity(float time) override;
+  float getTotalTime() override;
 
 private:
   float totalTime;
