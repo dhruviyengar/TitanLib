@@ -8,6 +8,7 @@ Boomerang (Planned)
 Move To Point (Planned)
 Turn To Heading (Planned)
 Vision Sensor Follow (Planned)
+Move For Distance (Planned)
 
 Subsystems:
 Solenoid (Planned)
