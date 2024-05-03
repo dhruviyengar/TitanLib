@@ -1,6 +1,15 @@
 10TitansLib
 
-Programmers: Dhruv Iyengar and Robert Ren
+Programmers: Dhruv Iyengar, Robert Ren, Sacchin Saravanan and Abhinav Pandey
 
-Field Monkeys and Tuners:
-Sacchin Saravanan and Abinav Pandey
+Algorithms:
+2D Motion Profiling
+Boomerang (Planned)
+Move To Point (Planned)
+Turn To Heading (Planned)
+Vision Sensor Follow (Planned)
+
+Subsystems:
+Solenoid (Planned)
+Sorting Intake (Planned)
+PTO (Planned)
