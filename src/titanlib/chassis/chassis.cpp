@@ -1,4 +1,5 @@
 #include "titanlib/chassis/chassis.hpp"
+#include "pros/misc.h"
 
 namespace titanlib {
 

@@ -10,8 +10,8 @@ void Chassis::followPath(CubicBezier bezier, std::unique_ptr<MotionProfile> prof
     PID linearPID = PID(linear);
     PID angularPID = PID(angular);
     while (pros::millis() - start < profile->getTotalTime()) {
-        float position = profile->getPosition(pros::millis() / 1000.0);
-        float velocity = profile->getVelocity(pros::millis() / 1000.0);
+        float position = profile->getPosition((pros::millis() - start) / 1000.0);
+        float velocity = profile->getVelocity((pros::millis() - start) / 1000.0);
         float theta = getHeading();
         if (params.forwards == false) {
             theta = constrainAngle(theta + 180);

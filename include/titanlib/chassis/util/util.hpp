@@ -1,3 +1,5 @@
+#pragma once
+
 #include "titanlib/chassis/point/point.hpp"
 #include <cmath>
 #include <vector>
@@ -52,16 +54,16 @@ inline Point lerp(Point point1, Point point2, float t) {
                point1.getY() + (diff.getY() * t));
 }
 
-inline float heading_to_slope(float heading) {
+inline float headingToSlope(float heading) {
   return tan((constrainAngle((heading - 90)) * -1) * (3.141592653 / 180));
 }
 
-inline float slope_to_heading(float slope) {
+inline float slopeToHeading(float slope) {
   return constrainAngle(((atan2(slope, 1) * (180 / 3.141592653)) - 90) * -1);
 }
 
 inline float getCurvature(Point position, Point target, float heading) {
-  float m = heading_to_slope(heading);
+  float m = headingToSlope(heading);
   if (m == INFINITY || m == -INFINITY) {
     m = 99999999.0;
   }
