@@ -10,16 +10,28 @@ void Chassis::updateOdom() {
       angleError(getHeading(), imu->get_heading()) * (M_PI / 180);
   float theta = imu->get_heading() * (M_PI / 180);
   if (vertWheel == nullptr) {
-    float left = ((((leftMotors->at(1).get_position() - prevPosLeft) / 360) *
-                   wheelSize * M_PI) /
-                  ratio) /
-                 deltaTheta;
-    float right = ((((rightMotors->at(1).get_position() - prevPosRight) / 360) *
-                    wheelSize * M_PI) /
-                   ratio) /
-                  deltaTheta;
-    float radius = (left + right) / 2;
-    verticalTravel = 2 * radius * sin(deltaTheta / 2);
+    if (deltaTheta != 0) {
+      float left = ((((leftMotors->at(1).get_position() - prevPosLeft) / 360) *
+                     wheelSize * M_PI) /
+                    ratio) /
+                   deltaTheta;
+      float right =
+          ((((rightMotors->at(1).get_position() - prevPosRight) / 360) *
+            wheelSize * M_PI) /
+           ratio) /
+          deltaTheta;
+      float radius = (left + right) / 2;
+      verticalTravel = 2 * radius * sin(deltaTheta / 2);
+    } else {
+      float left = ((((leftMotors->at(1).get_position() - prevPosLeft) / 360) *
+                     wheelSize * M_PI) /
+                    ratio);
+      float right =
+          ((((rightMotors->at(1).get_position() - prevPosRight) / 360) *
+            wheelSize * M_PI) /
+           ratio);
+      verticalTravel = (left + right) / 2;
+    }
   } else {
     float radius = (vertWheel->getDistanceTravelled() / deltaTheta) -
                    vertWheel->getHorizontalOffset() * sgn(deltaTheta);

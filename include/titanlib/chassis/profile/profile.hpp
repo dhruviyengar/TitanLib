@@ -5,10 +5,10 @@ namespace titanlib {
     class MotionProfile {
 
         public:
-            MotionProfile();
-            virtual float getPosition(float time);
-            virtual float getVelocity(float time);
-            virtual float getTotalTime();
+            virtual ~MotionProfile() = 0;
+            virtual float getPosition(float time) = 0;
+            virtual float getVelocity(float time) = 0;
+            virtual float getTotalTime() = 0;
 
 
     };

@@ -24,7 +24,7 @@ public:
           pros::Imu *imu, TrackingWheel *vertWheel, TrackingWheel *horzWheel,
           float ratio, float wheelSize, float chasePower, PIDSettings linear,
           PIDSettings angular);
-  void followPath(CubicBezier bezier, std::unique_ptr<MotionProfile> profile,
+  void followPath(CubicBezier bezier, float maxAccel, float maxVel,
                   FollowPathParams params = {}, float lookAhead = 50, bool async = false);
   void calibrate();
   void setPose(Point point, float heading);
@@ -38,8 +38,8 @@ private:
   float ratio;
   float wheelSize;
   float chasePower;
-  PIDSettings linear;
-  PIDSettings angular;
+  PIDSettings linear = PIDSettings(0, 0, 0, 0, 0);
+  PIDSettings angular = PIDSettings(0, 0, 0, 0, 0);
   pros::MotorGroup *leftMotors;
   pros::MotorGroup *rightMotors;
   float prevPosLeft = 0;

@@ -1,18 +1,38 @@
 #include "main.h"
 
+#include "titanlib/chassis/chassis.hpp"
+#include "titanlib/chassis/pid/pid.hpp"
+#include "titanlib/chassis/profile/trapezoidal.hpp"
+
 /**
  * A callback function for LLEMU's center button.
  *
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
+
+using namespace titanlib;
+
+pros::Motor left1(1, pros::E_MOTOR_GEAR_BLUE, true);
+pros::Motor left2(2, pros::E_MOTOR_GEAR_BLUE, true);
+pros::Motor left3(3, pros::E_MOTOR_GEAR_BLUE, true);
+
+pros::Motor right1(8, pros::E_MOTOR_GEAR_BLUE, false);
+pros::Motor right2(9, pros::E_MOTOR_GEAR_BLUE, false);
+pros::Motor right3(7, pros::E_MOTOR_GEAR_BLUE, false);
+
+pros::MotorGroup leftMotors{left1, left2, left3};
+pros::MotorGroup rightMotors{right1, right2, right3};
+
+pros::IMU imu(11);
+
+titanlib::Chassis chassis(&leftMotors, &rightMotors, &imu, nullptr, nullptr, 1.333, 3.25, 2, titanlib::PIDSettings(8, 12, 300, 1, 2000), titanlib::PIDSettings(5, 40, 100, 3, 2000));
+
+int screen_refresh() {
+	while (true) {
+		pros::lcd::set_text(0, "Position: " + chassis.getPos().asString());
+		pros::lcd::set_text(1, "Heading: " + std::to_string(chassis.getHeading()));
+		pros::delay(10);
 	}
 }
 
@@ -23,10 +43,9 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
-
-	pros::lcd::register_btn1_cb(on_center_button);
+  pros::lcd::initialize();
+  chassis.calibrate();
+  pros::Task screen(screen_refresh);
 }
 
 /**
@@ -58,7 +77,12 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	chassis.setPose(titanlib::Point(0, 0), 0);
+	CubicBezier bezier(Point(0, 0), Point(40, 40), Point(0, 20), Point(20, 20));
+	chassis.followPath(bezier, 10, 18);
+	//printf("%f", bezier.getCurvature(0.1));
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -74,20 +98,5 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor left_mtr(1);
-	pros::Motor right_mtr(2);
 
-	while (true) {
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
-		int left = master.get_analog(ANALOG_LEFT_Y);
-		int right = master.get_analog(ANALOG_RIGHT_Y);
-
-		left_mtr = left;
-		right_mtr = right;
-
-		pros::delay(20);
-	}
 }
