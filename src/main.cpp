@@ -80,7 +80,7 @@ void competition_initialize() {}
 void autonomous() {
 	chassis.setPose(titanlib::Point(0, 0), 0);
 	CubicBezier bezier(Point(0, 0), Point(40, 40), Point(0, 20), Point(20, 20));
-	chassis.followPath(bezier, 10, 18);
+	chassis.followPath(bezier, 24, 36);
 	//printf("%f", bezier.getCurvature(0.1));
 }
 
