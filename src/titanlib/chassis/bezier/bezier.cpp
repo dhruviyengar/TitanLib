@@ -74,6 +74,22 @@ float CubicBezier::secondDistanceDerivative(Point point, float t) {
           (getYSecondDerivative(t) * diff.getY()) + powf(getYDerivative(t), 2));
 }
 
+float CubicBezier::getTFromArc(float arc, float tolerance) {
+  float min = 0;
+  float max = 1;
+  while (min <= max) {
+    float mid = min + max / 2;
+    if (fabs(arcLength(0, mid) - arc) < tolerance) {
+      return arc;
+    } else if (arcLength(0, mid) < arc) {
+      min = mid;
+    } else if (arcLength(0, mid) > arc) {
+      max = mid;
+    }
+  }
+  return -1;
+}
+
 float CubicBezier::closestPoint(Point point, float initialGuess,
                                 float tolerance) {
   float t = initialGuess;

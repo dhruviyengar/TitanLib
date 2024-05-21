@@ -22,8 +22,6 @@ void Chassis::followPath(CubicBezier bezier, float maxAccel, float maxVel, Follo
         }
         float t = bezier.closestPoint(getPos(), prevT, 0.01);
         float linearVel = linearPID.update(position - bezier.arcLength(0, t), 10); //need to add in FF and velocity calculations
-        float curvature = -bezier.getCurvature(t);
-        if (curvature == NAN || curvature == -NAN || curvature == INFINITY || curvature == -INFINITY) curvature = 0;
         float targetHeading = constrainAngle(slopeToHeading(bezier.getYDerivative(t) / bezier.getXDerivative(t)) * sgn(bezier.getXDerivative(t)));
         float angularVel = angularPID.update(angleError(getHeading(), targetHeading), 10);
         Point bezierPoint = bezier.getPoint(t);
