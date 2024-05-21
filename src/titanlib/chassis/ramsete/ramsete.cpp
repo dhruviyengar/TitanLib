@@ -14,9 +14,9 @@ std::pair<float, float> Ramsete::ramseteOutput(Point pos, Point target, float he
     Point error = target - pos;
     float eX = (error.getX() * cos(theta)) + (error.getY() * sin(theta));
     float eY = (error.getX() * -sin(theta)) + (error.getY() * cos(theta));
-    float k = 2 * zeta * sqrtf(w * w + b * v * v);
-    float vOutput = v * cos(thetaError) + k * eX;
-    float wOutput = w + k * thetaError + ((b * v * sin(thetaError) * eY) / thetaError);
+    float k = 2 * zeta * sqrtf(w * w + (b * v * v));
+    float vOutput = v * cos(thetaError) + (k * eX);
+    float wOutput = w + (k * thetaError) + ((b * v * sin(thetaError) * eY) / thetaError);
     return std::make_pair(vOutput, wOutput);
 }
 
