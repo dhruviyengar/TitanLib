@@ -13,7 +13,7 @@ void Chassis::followPlan(MotionPlan plan) {
         Point error(sin(thetaError) * pathPoint.distance(getPos()), cos(thetaError) * pathPoint.distance(getPos()));
         float v = plan.getLinearVelocity(t);
         float w = plan.getAngularVelocity(t);
-        w -= error.getX() * 0.01;
+        if (t < 0.95) w -= error.getX() * 0.19;
         float left = v + ((w * 12) / 2);
         float right = v - ((w * 12) / 2);
         float rpmScale = (1.0 / 60.0) * ((wheelSize * M_PI) / ratio); 
