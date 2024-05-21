@@ -2,7 +2,6 @@
 
 #include "titanlib/chassis/bezier/bezier.hpp"
 #include <map>
-#include "titanlib/chassis/util/util.hpp"
 #include "titanlib/chassis/bezier/bezier.hpp"
 
 namespace titanlib {

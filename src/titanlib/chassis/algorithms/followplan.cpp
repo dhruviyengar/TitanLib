@@ -1,21 +1,23 @@
 #include "titanlib/chassis/chassis.hpp"
 #include "titanlib/chassis/util/util.hpp"
+#include "titanlib/chassis/ramsete/ramsete.hpp"
 
 namespace titanlib {
 
 void Chassis::followPlan(MotionPlan plan) {
     isMoving.set(true);
     float prevT = 0;
+    Ramsete ramsete(2.0, 0.7);
     while (true) {
         float t = plan.getCurve().closestPoint(getPos(), prevT, 0.01);
         float v = plan.getLinearVelocity(t);
         float w = plan.getAngularVelocity(t);
-        float left = v + ((w * 12) / 2);
-        float right = v - ((w * 12) / 2);
+        std::pair<float, float> velocities = ramsete.ramseteOutput(getPos(), plan.getCurve().getPoint(t), getHeading(), plan.getCurve().getHeading(t), v, w);
+        float left = velocities.first + ((velocities.second * 12) / 2);
+        float right = velocities.first - ((velocities.second * 12) / 2);
         float rpmScale = (1.0 / 60.0) * ((wheelSize * M_PI) / ratio); 
         leftMotors->move_velocity(left / rpmScale);
         rightMotors->move_velocity(right / rpmScale);
-        printf("%f %f %f %f %f\n", t, left, right, left / rpmScale, right / rpmScale);
         pros::delay(10);
         prevT = t;
     }

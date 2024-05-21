@@ -31,19 +31,6 @@ void MotionPlan::generate() {
     float w = v * -k;
     linearVelocities[t] = v;
     angularVelocities[t] = w;
-    std::string type = "";
-    if (v == maxVel) {
-        type = "maxvel";
-    } else if (v == vMaxAccel) {
-        type = "maxaccel";
-    } else if (v == vMaxDeAccel) {
-        type = "maxDeAccel";
-    } else if (v == vCurvature) {
-        type = "max curvature";
-    } else {
-        type = "deaccel limiter";
-    }
-    printf("%f %f %f %s\n", t, v, w, type.c_str());
     t += 0.01;
   }
   linearVelocities[0] = 1;
