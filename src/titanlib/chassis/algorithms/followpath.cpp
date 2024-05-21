@@ -26,11 +26,9 @@ void Chassis::followPath(CubicBezier bezier, float maxAccel, float maxVel, Follo
         if (curvature == NAN || curvature == -NAN || curvature == INFINITY || curvature == -INFINITY) curvature = 0;
         float targetHeading = constrainAngle(slopeToHeading(bezier.getYDerivative(t) / bezier.getXDerivative(t)) * sgn(bezier.getXDerivative(t)));
         float angularVel = angularPID.update(angleError(getHeading(), targetHeading), 10);
-        /*if (bezier.getPoint(t).distance(bezier.getPoint(prevT)) != 0) {
-            Point crossTrack = lerp(bezier.getPoint(prevT), bezier.getPoint(t), lookAhead / bezier.getPoint(t).distance(bezier.getPoint(prevT)));
-            float crossAngle = angleError(theta, getPos().angle(crossTrack));
-            angularVel += crossAngle * 0.5;
-        }*/
+        Point bezierPoint = bezier.getPoint(t);
+        int slopeSgn = sgn(bezierPoint - getPos());
+        angularVel += bezierPoint.distance(getPos()) * slopeSgn;
         if (params.forwards == false) linearVel = -linearVel;
         float leftVel = linearVel + angularVel;
         float rightVel = linearVel - angularVel;
