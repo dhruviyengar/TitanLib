@@ -2,7 +2,7 @@
 
 #include "titanlib/chassis/chassis.hpp"
 #include "titanlib/chassis/pid/pid.hpp"
-#include "titanlib/chassis/profile/trapezoidal.hpp"
+#include "titanlib/chassis/profile/motion.hpp"
 
 /**
  * A callback function for LLEMU's center button.
@@ -80,8 +80,11 @@ void competition_initialize() {}
 void autonomous() {
 	chassis.setPose(titanlib::Point(0, 0), 0);
 	CubicBezier bezier(Point(0, 0), Point(40, 40), Point(0, 20), Point(20, 20));
-	chassis.followPath(bezier, 24, 36);
+	//chassis.followPath(bezier, 24, 36);
 	//printf("%f", bezier.getCurvature(0.1));
+	MotionPlan plan(bezier, 20.0, 10.0, 35.0);
+	plan.generate();
+	chassis.followPlan(plan);
 }
 
 /**

@@ -1,7 +1,15 @@
 #include "titanlib/chassis/bezier/bezier.hpp"
+#include "titanlib/chassis/util/util.hpp"
 #include <cmath>
 
 namespace titanlib {
+
+CubicBezier::CubicBezier() {
+  this->start = Point(0, 0);
+  this->end = Point(0, 0);
+  this->startControl = Point(0, 0);
+  this->endControl = Point(0, 0);
+}
 
 CubicBezier::CubicBezier(Point start, Point end, Point startControl,
                          Point endControl) {
@@ -59,6 +67,10 @@ float CubicBezier::getXSecondDerivative(float t) {
 
 float CubicBezier::getSlope(float t) {
   return getYDerivative(t) / getXDerivative(t);
+}
+
+float CubicBezier::getHeading(float t) {
+  return slopeToHeading(getSlope(t)) * getXDerivative(t);
 }
 
 float CubicBezier::firstDistanceDerivative(Point point, float t) {

@@ -9,6 +9,7 @@
 #include "titanlib/variable/variable.hpp"
 #include "titanlib/chassis/bezier/bezier.hpp"
 #include "titanlib/chassis/util/util.hpp"
+#include "titanlib/chassis/profile/motion.hpp"
 
 
 namespace titanlib {
@@ -24,8 +25,7 @@ public:
           pros::Imu *imu, TrackingWheel *vertWheel, TrackingWheel *horzWheel,
           float ratio, float wheelSize, float chasePower, PIDSettings linear,
           PIDSettings angular);
-  void followPath(CubicBezier bezier, float maxAccel, float maxVel,
-                  FollowPathParams params = {}, float lookAhead = 50, bool async = false);
+  void followPlan(MotionPlan plan);
   void calibrate();
   void setPose(Point point, float heading);
   Point getPos();
