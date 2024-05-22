@@ -70,7 +70,7 @@ float CubicBezier::getSlope(float t) {
 }
 
 float CubicBezier::getHeading(float t) {
-  return slopeToHeading(getSlope(t)) * getXDerivative(t);
+  return slopeToHeading(getSlope(t)) * sgn(getXDerivative(t));
 }
 
 float CubicBezier::firstDistanceDerivative(Point point, float t) {
