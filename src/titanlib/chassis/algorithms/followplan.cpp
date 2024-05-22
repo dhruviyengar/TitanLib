@@ -7,9 +7,11 @@ namespace titanlib {
 void Chassis::followPlan(MotionPlan plan) {
   isMoving.set(true);
   float prevT = 0;
-  Ramsete ramsete(0.015, 0.8);
+  Point prevPos = getPos();
+  Ramsete ramsete(0.017, 0.75);
   while (true) {
     float t = plan.getCurve().closestPoint(getPos(), prevT, 0.01);
+    if (t > 0.99) break;
     Point pathPoint = plan.getCurve().getPoint(t);
     float v = plan.getLinearVelocity(t);
     float w = plan.getAngularVelocity(t);
@@ -24,6 +26,7 @@ void Chassis::followPlan(MotionPlan plan) {
     rightMotors->move_velocity(right / rpmScale);
     pros::delay(10);
     prevT = t;
+    prevPos = getPos();
   }
   leftMotors->move(0);
   rightMotors->move(0);
