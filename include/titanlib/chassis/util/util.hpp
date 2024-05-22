@@ -109,4 +109,13 @@ inline std::pair<float, float> ratioSpeedsToMax(float leftVel, float rightVel,
   }
   return std::make_pair(leftVel, rightVel);
 }
+
+inline float sinc(float x) {
+  if (fabs(x) < 1e-9) {
+    return 1.0 - 1.0 / 6.0 * x * x;
+  } else {
+    return sin(x) / x;
+  }
+}
+
 } // namespace titanlib

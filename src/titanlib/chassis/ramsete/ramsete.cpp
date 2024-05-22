@@ -23,7 +23,7 @@ std::pair<float, float> Ramsete::ramseteOutput(Point pos, Point target,
   float k = 2.0 * zeta * sqrtf((w * w) + b * (v * v));
   float vOutput = v * cos(eTheta) + (k * eX);
   float wOutput = w + (k * eTheta) +
-                  ((b * v * sin(eTheta) * eY) / eTheta);
+                  (b * v * sinc(eTheta) * eY);
   return std::make_pair(vOutput, wOutput);
 }
 

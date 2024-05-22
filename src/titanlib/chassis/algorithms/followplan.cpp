@@ -7,7 +7,7 @@ namespace titanlib {
 void Chassis::followPlan(MotionPlan plan) {
   isMoving.set(true);
   float prevT = 0;
-  Ramsete ramsete(0.05, 0.7);
+  Ramsete ramsete(0.01, 0.7);
   while (true) {
     float t = plan.getCurve().closestPoint(getPos(), prevT, 0.01);
     Point pathPoint = plan.getCurve().getPoint(t);
@@ -15,7 +15,7 @@ void Chassis::followPlan(MotionPlan plan) {
     float w = plan.getAngularVelocity(t);
     std::pair<float, float> velocities = ramsete.ramseteOutput(
         getPos(), pathPoint, getHeading(), plan.getCurve().getHeading(t), v, w);
-    printf("%f %f %f %f %f %f\n", v, w, velocities.first, velocities.second, getHeading(), plan.getCurve().getHeading(t));
+    printf("%f %f %f %f %f\n", t, v, w, velocities.first, velocities.second);
     v = velocities.first;
     w = velocities.second;
     float left = v + ((w * 12) / 2);
