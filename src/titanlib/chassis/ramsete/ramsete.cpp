@@ -17,9 +17,6 @@ std::pair<float, float> Ramsete::ramseteOutput(Point pos, Point target,
   Point diff = target - pos;
   float eX = (cos(theta) * diff.getX()) + (sin(theta) * diff.getY());
   float eY = (-sin(theta) * diff.getX()) + (cos(theta) * diff.getY());
-  /*float bearingError = angleError(heading, pos.angle(target)) * (M_PI / 180);
-  Point error(-sin(bearingError) * pos.distance(target),
-              -cos(bearingError) * pos.distance(target));*/
   float k = 2.0 * zeta * sqrtf((w * w) + b * (v * v));
   float vOutput = v * cos(eTheta) + (k * eX);
   float wOutput = w + (k * eTheta) +
