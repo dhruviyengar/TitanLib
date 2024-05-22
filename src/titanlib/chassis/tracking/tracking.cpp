@@ -1,5 +1,4 @@
 #include "titanlib/chassis/tracking/tracking.hpp"
-#include "pros/motors.h"
 
 namespace titanlib {
 

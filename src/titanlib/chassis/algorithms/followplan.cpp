@@ -1,7 +1,5 @@
-#include "pros/llemu.hpp"
 #include "titanlib/chassis/chassis.hpp"
 #include "titanlib/chassis/ramsete/ramsete.hpp"
-#include "titanlib/chassis/util/util.hpp"
 
 namespace titanlib {
 
@@ -9,7 +7,7 @@ void Chassis::followPlan(MotionPlan plan) {
   isMoving.set(true);
   float prevT = 0;
   Point prevPos = getPos();
-  Ramsete ramsete(0.017, 0.75);
+  Ramsete ramsete(0.02, 0.8);
   while (true) {
     float t = plan.getCurve().closestPoint(getPos(), prevT, 0.01);
     if (t > 0.99)

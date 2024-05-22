@@ -21,7 +21,7 @@ void MotionPlan::generate() {
     float derivativeX = bezier.getXDerivative(t);
     float derivativeY = bezier.getYDerivative(t);
     float k = bezier.getCurvature(t);
-    float vCurvature = sqrtf(0.8 * 9.81 * (1.0 / k));
+    float vCurvature = sqrtf(1.1 * 9.81 * (1.0 / k));
     float vMaxAccel = sqrtf(v * v + 2 * maxAccel * deltaDist);
     float vMaxDeAccel =
         sqrtf(2 * maxDeAccel * (totalLength - bezier.arcLength(0, t)));

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "titanlib/chassis/point/point.hpp"
-#include <vector>
 
 namespace titanlib {
 
