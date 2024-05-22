@@ -7,7 +7,7 @@ class Ramsete {
 
     public:
         Ramsete(float b, float zeta);
-        std::pair<float, float> ramseteOutput(Point pos, Point target, float heading, float targetHeading, float v, float w);
+        std::pair<float, float> ramseteOutput(Point pos, Point target, float heading, float targetHeading, float v, float w, float t);
 
 
     private:

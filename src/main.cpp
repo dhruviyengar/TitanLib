@@ -26,14 +26,17 @@ pros::MotorGroup rightMotors{right1, right2, right3};
 
 pros::IMU imu(11);
 
-titanlib::Chassis chassis(&leftMotors, &rightMotors, &imu, nullptr, nullptr, 1.333, 3.25, 2, titanlib::PIDSettings(8, 12, 300, 1, 2000), titanlib::PIDSettings(5, 40, 100, 3, 2000));
+titanlib::Chassis chassis(&leftMotors, &rightMotors, &imu, nullptr, nullptr,
+                          1.333, 3.25, 2,
+                          titanlib::PIDSettings(8, 12, 300, 1, 2000),
+                          titanlib::PIDSettings(5, 40, 100, 3, 2000));
 
 int screen_refresh() {
-	while (true) {
-		pros::lcd::set_text(0, "Position: " + chassis.getPos().asString());
-		pros::lcd::set_text(1, "Heading: " + std::to_string(chassis.getHeading()));
-		pros::delay(10);
-	}
+  while (true) {
+    pros::lcd::set_text(0, "Position: " + chassis.getPos().asString());
+    pros::lcd::set_text(1, "Heading: " + std::to_string(chassis.getHeading()));
+    pros::delay(10);
+  }
 }
 
 /**
@@ -78,14 +81,16 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	//CubicBezier bezier(Point(0, 0), Point(40, 40), Point(0, 20), Point(10, 20))
-	CubicBezier bezier(Point(0, 0), Point(35, 25), Point(0, 20), Point(35, 25));
-	chassis.setPose(titanlib::Point(0, 0), bezier.getHeading(0));
-	//chassis.followPath(bezier, 24, 36);
-	//printf("%f", bezier.getCurvature(0.1));
-	MotionPlan plan(bezier, 25.0, 20.0, 35.0);
-	plan.generate();
-	chassis.followPlan(plan);
+  // CubicBezier bezier(Point(0, 0), Point(40, 40), Point(0, 20), Point(10, 20))
+  chassis.setPose(titanlib::Point(0, 0), 90);
+
+  CubicBezier bezier(Point(0, 0), Point(20, 40), Point(20, 0), Point(50, 10));
+  // chassis.followPath(bezier, 24, 36);
+  // printf("%f", bezier.getCurvature(0.1));
+  MotionPlan plan(bezier, 25.0, 20.0, 35.0);
+
+  plan.generate();
+  chassis.followPlan(plan);
 }
 
 /**
@@ -101,6 +106,4 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() {
-
-}
+void opcontrol() {}

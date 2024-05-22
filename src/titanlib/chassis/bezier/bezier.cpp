@@ -71,8 +71,18 @@ float CubicBezier::getSlope(float t) {
 
 float CubicBezier::getHeading(float t) {
   float m = getSlope(t);
-  if (fabs(m) == INFINITY || fabs(m) == NAN) m = 999999;
-  return slopeToHeading(getSlope(t)) * sgn(getXDerivative(t));
+  if (fabs(m) == INFINITY || fabs(m) == NAN) {
+    if (getYDerivative(t) > 0) {
+      return 0;
+    } else {
+      return 180;
+    }
+  }
+  float heading = slopeToHeading(m);
+  if (sgn(getXDerivative(t)) < 0) {
+    heading = constrainAngle(heading - 180);
+  }
+  return heading;
 }
 
 float CubicBezier::firstDistanceDerivative(Point point, float t) {
@@ -166,7 +176,7 @@ float CubicBezier::getCurvature(float t) {
   float derivY = getYDerivative(t);
   float secDerivX = getXSecondDerivative(t);
   float secDerivY = getYSecondDerivative(t);
-  float num = derivX * secDerivY - secDerivX * derivY;
+  float num = (derivX * secDerivY) - (secDerivX * derivY);
   float dem = powf((derivX * derivX) + (derivY * derivY), 1.5);
   return num / dem;
 }

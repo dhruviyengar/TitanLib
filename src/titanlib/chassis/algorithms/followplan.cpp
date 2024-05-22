@@ -1,3 +1,4 @@
+#include "pros/llemu.hpp"
 #include "titanlib/chassis/chassis.hpp"
 #include "titanlib/chassis/ramsete/ramsete.hpp"
 #include "titanlib/chassis/util/util.hpp"
@@ -17,7 +18,7 @@ void Chassis::followPlan(MotionPlan plan) {
     float v = plan.getLinearVelocity(t);
     float w = plan.getAngularVelocity(t);
     std::pair<float, float> velocities = ramsete.ramseteOutput(
-        getPos(), pathPoint, getHeading(), plan.getCurve().getHeading(t), v, w);
+        getPos(), pathPoint, getHeading(), plan.getCurve().getHeading(t), v, w, t);
     v = velocities.first;
     w = velocities.second;
     float left = v + ((w * 12) / 2);
