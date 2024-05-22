@@ -33,8 +33,8 @@ void MotionPlan::generate() {
     angularVelocities[t] = w;
     t += 0.01;
   }
-  linearVelocities[0] = 1;
-  angularVelocities[0] = -bezier.getCurvature(0);
+  linearVelocities[0] = getLinearVelocity(0.02);
+  angularVelocities[0] = getAngularVelocity(0.02);
 }
 
 float MotionPlan::getLinearVelocity(float t) {

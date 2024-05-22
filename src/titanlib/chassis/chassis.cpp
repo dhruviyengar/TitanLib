@@ -36,7 +36,7 @@ void Chassis::calibrate() {
 
 void Chassis::setPose(Point pos, float heading) {
   this->pos.set(pos);
-  this->heading.set(heading);
+  this->imu->set_heading(heading);
 }
 
 Point Chassis::getPos() { return pos.get(); }

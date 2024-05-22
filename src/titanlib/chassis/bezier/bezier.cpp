@@ -70,6 +70,8 @@ float CubicBezier::getSlope(float t) {
 }
 
 float CubicBezier::getHeading(float t) {
+  float m = getSlope(t);
+  if (fabs(m) == INFINITY || fabs(m) == NAN) m = 999999;
   return slopeToHeading(getSlope(t)) * sgn(getXDerivative(t));
 }
 

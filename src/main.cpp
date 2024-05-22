@@ -78,11 +78,12 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	chassis.setPose(titanlib::Point(0, 0), 0);
-	CubicBezier bezier(Point(0, 0), Point(40, 40), Point(0, 20), Point(20, 20));
+	//CubicBezier bezier(Point(0, 0), Point(40, 40), Point(0, 20), Point(10, 20))
+	CubicBezier bezier(Point(0, 0), Point(35, 25), Point(0, 20), Point(35, 25));
+	chassis.setPose(titanlib::Point(0, 0), bezier.getHeading(0));
 	//chassis.followPath(bezier, 24, 36);
 	//printf("%f", bezier.getCurvature(0.1));
-	MotionPlan plan(bezier, 30.0, 20.0, 35.0);
+	MotionPlan plan(bezier, 25.0, 20.0, 35.0);
 	plan.generate();
 	chassis.followPlan(plan);
 }
