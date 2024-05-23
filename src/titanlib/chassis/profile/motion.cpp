@@ -24,7 +24,7 @@ void MotionPlan::generate() {
     float vCurvature = sqrtf(1.1 * 9.81 * (1.0 / k));
     float vMaxAccel = sqrtf(v * v + 2 * maxAccel * deltaDist);
     float vMaxDeAccel =
-        sqrtf(2 * maxDeAccel * (totalLength - bezier.arcLength(0, t)));
+        sqrtf(1.4 * maxDeAccel * (totalLength - bezier.arcLength(0, t)));
     v = fmin(fmin(fmin(maxVel, vCurvature), vMaxAccel), vMaxDeAccel);
     if (v != vMaxDeAccel)
       v = fmax(sqrtf(v * v - 2 * vMaxDeAccel * deltaDist), v);
