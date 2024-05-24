@@ -12,11 +12,12 @@ MotionPlan::MotionPlan(CubicBezier bezier, float maxAccel, float maxDeAccel,
   this->maxVel = maxVel;
 }
 
-void MotionPlan::generate() {
+void MotionPlan::generate(float ceiling) {
   float t = 0;
   float v = 0;
   float totalLength = bezier.arcLength(0, 1);
-  while (t <= 1) {
+  float distanceTravelled = 0;
+  while (t <= ceiling) {
     float deltaDist = t == 0 ? 0 : bezier.arcLength(t - 0.01, t);
     float derivativeX = bezier.getXDerivative(t);
     float derivativeY = bezier.getYDerivative(t);
@@ -24,13 +25,14 @@ void MotionPlan::generate() {
     float vCurvature = sqrtf(1.1 * 9.81 * (1.0 / k));
     float vMaxAccel = sqrtf(v * v + 2 * maxAccel * deltaDist);
     float vMaxDeAccel =
-        sqrtf(1.4 * maxDeAccel * (totalLength - bezier.arcLength(0, t)));
+        sqrtf(0.8 * maxDeAccel * (totalLength - distanceTravelled));
     v = fmin(fmin(fmin(maxVel, vCurvature), vMaxAccel), vMaxDeAccel);
     if (v != vMaxDeAccel)
       v = fmax(sqrtf(v * v - 2 * vMaxDeAccel * deltaDist), v);
     float w = v * -k;
     linearVelocities[t] = v;
     angularVelocities[t] = w;
+    distanceTravelled += deltaDist;
     t += 0.01;
   }
   linearVelocities[0] = getLinearVelocity(0.02);

@@ -11,7 +11,7 @@ class MotionPlan {
 public:
   MotionPlan(CubicBezier bezier, float maxAccel, float maxDeAccel,
              float maxVel);
-  void generate();
+  void generate(float ceiling = 1);
   float getLinearVelocity(float t);
   float getAngularVelocity(float t);
   CubicBezier getCurve();
