@@ -15,9 +15,6 @@ std::pair<float, float> Ramsete::ramseteOutput(Point pos, Point target,
   float eTheta = angleError(heading, targetHeading) * (M_PI / 180.0);
   float theta = heading * (M_PI / 180.0);
   float bearingTheta = atan2f(target.getX() - pos.getX(), target.getY() - pos.getY());
-  /*Point diff = target - pos;
-  float eX = (cos(theta) * diff.getX()) + (sin(theta) * diff.getY());
-  float eY = (-sin(theta) * diff.getX()) + (cos(theta) * diff.getY());*/
   float bearingError = bearingTheta - theta;
   float eX = sin(bearingError) * pos.distance(target);
   float eY = cos(bearingError) * pos.distance(target);

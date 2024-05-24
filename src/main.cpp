@@ -85,6 +85,7 @@ void autonomous() {
   chassis.setPose(titanlib::Point(0, 0), 90);
 
   CubicBezier bezier(Point(0, 0), Point(40, 40), Point(20, 0), Point(40, 40));
+  CubicBezier halfPoint = bezier.deCasteljau(0.5);
   // chassis.followPath(bezier, 24, 36);
   // printf("%f", bezier.getCurvature(0.1));
   MotionPlan plan(bezier, 30.0, 20.0, 35.0);
@@ -92,7 +93,6 @@ void autonomous() {
   float start = pros::millis();
   plan.generate();
   //chassis.followPlan(plan);
-  printf("%f", pros::millis() - start);
 }
 
 /**

@@ -8,6 +8,10 @@ class CubicBezier {
 public:
   CubicBezier();
   CubicBezier(Point start, Point end, Point startControl, Point endControl);
+  Point getStart();
+  Point getStartControl();
+  Point getEndControl();
+  Point getEnd();
   Point getPoint(float t);
   float getYDerivative(float t);
   float getXDerivative(float t);
@@ -21,6 +25,7 @@ public:
   float getHeading(float t);
   float arcLength(float startT, float endT);
   float getCurvature(float t);
+  CubicBezier deCasteljau(float t);
 
 private:
   Point start = Point(0, 0);

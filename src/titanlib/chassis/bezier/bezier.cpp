@@ -19,6 +19,22 @@ CubicBezier::CubicBezier(Point start, Point end, Point startControl,
   this->endControl = endControl;
 }
 
+Point CubicBezier::getStart() {
+  return start;
+}
+
+Point CubicBezier::getStartControl() {
+  return startControl;
+}
+
+Point CubicBezier::getEndControl() {
+  return endControl;
+}
+
+Point CubicBezier::getEnd() {
+  return end;
+}
+
 Point CubicBezier::getPoint(float t) {
   if (t == 0) {
     return start;
@@ -179,6 +195,16 @@ float CubicBezier::getCurvature(float t) {
   float num = (derivX * secDerivY) - (secDerivX * derivY);
   float dem = powf((derivX * derivX) + (derivY * derivY), 1.5);
   return num / dem;
+}
+
+CubicBezier CubicBezier::deCasteljau(float t) {
+  Point q0 = Point((1 - t) * start.getX() + t * startControl.getX(), (1 - t) * start.getY() + t * startControl.getY());
+  Point q1 = Point((1 - t) * startControl.getX() + t * endControl.getX(), (1 - t) * startControl.getY() + t * endControl.getY());
+  Point q2 = Point((1 - t) * endControl.getX() + t * end.getX(), (1 - t) * endControl.getY() + t * end.getY());
+  Point r0 = Point((1 - t) * q0.getX() + t * q1.getX(), (1 - t) * q0.getY() + t * q1.getY());
+  Point r1 = Point((1 - t) * q1.getX() + t * q2.getX(), (1 - t) * q1.getY() + t * q2.getY());
+  Point s = Point((1 - t) * r0.getX() + t * r1.getX(), (1 - t) * r0.getY() + t * r1.getY());
+  return CubicBezier(s, end, r1, q2);
 }
 
 } // namespace titanlib
