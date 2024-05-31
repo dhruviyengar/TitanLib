@@ -10,7 +10,7 @@ void Chassis::followPlan(MotionPlan plan) {
   Ramsete ramsete(0.015, 0.7);
   while (true) {
     float t = plan.getCurve().closestPoint(getPos(), prevT, 0.01);
-    if (t > 0.995)
+    if (t > 0.99)
       break;
     Point pathPoint = plan.getCurve().getPoint(t);
     float v = plan.getLinearVelocity(t);

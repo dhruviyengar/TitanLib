@@ -119,11 +119,11 @@ float CubicBezier::getTFromArc(float arc, float tolerance) {
   float max = 1;
   while (min <= max) {
     float mid = min + max / 2;
-    if (fabs(arcLength(0, mid) - arc) < tolerance) {
+    if (fabs(arcLength(0, mid, true) - arc) < tolerance) {
       return arc;
-    } else if (arcLength(0, mid) < arc) {
+    } else if (arcLength(0, mid, true) < arc) {
       min = mid;
-    } else if (arcLength(0, mid) > arc) {
+    } else if (arcLength(0, mid, true) > arc) {
       max = mid;
     }
   }
@@ -152,39 +152,15 @@ float CubicBezier::closestPoint(Point point, float initialGuess,
 }
 
 // Legendre-Gauss approximation
-float CubicBezier::arcLength(float startT, float endT) {
-  std::vector<std::vector<float>> coefficients{
-      {0.1279381953467522, -0.0640568928626056},
-      {0.1279381953467522, 0.0640568928626056},
-      {0.1258374563468283, -0.1911188674736163},
-      {0.1258374563468283, 0.1911188674736163},
-      {0.1216704729278034, -0.3150426796961634},
-      {0.1216704729278034, 0.3150426796961634},
-      {0.1155056680537256, -0.4337935076260451},
-      {0.1155056680537256, 0.4337935076260451},
-      {0.1074442701159656, -0.5454214713888396},
-      {0.1074442701159656, 0.5454214713888396},
-      {0.0976186521041139, -0.6480936519369755},
-      {0.0976186521041139, 0.6480936519369755},
-      {0.0861901615319533, -0.7401241915785544},
-      {0.0861901615319533, 0.7401241915785544},
-      {0.0733464814110803, -0.8200019859739029},
-      {0.0733464814110803, 0.8200019859739029},
-      {0.0592985849154368, -0.8864155270044011},
-      {0.0592985849154368, 0.8864155270044011},
-      {0.0442774388174198, -0.9382745520027328},
-      {0.0442774388174198, 0.9382745520027328},
-      {0.0285313886289337, -0.9747285559713095},
-      {0.0285313886289337, 0.9747285559713095},
-      {0.0123412297999872, -0.9951872199970213},
-      {0.0123412297999872, 0.9951872199970213}};
-  float length = 0;
-  for (int i = 0; i < coefficients.size(); i++) {
-    float t = 0.5 * (coefficients[i][1] + 1) * (endT - startT) + startT;
-    length += coefficients[i][0] * ((endT - startT) / 2) *
-              sqrt((powf(getXDerivative(t), 2) + powf(getYDerivative(t), 2)));
+float CubicBezier::arcLength(float startT, float endT, bool useLegendre) {
+  auto integrand = [this](double t) -> double {
+        return std::sqrt(std::pow(getXDerivative(t), 2) + std::pow(getYDerivative(t), 2));
+  };
+  if (useLegendre) {
+    return legendreGaussIntegral(integrand, startT, endT);
+  } else {
+    return trapezoidalSumIntegral(integrand, startT, endT, 10);
   }
-  return length;
 }
 
 float CubicBezier::getCurvature(float t) {

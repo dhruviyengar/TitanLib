@@ -15,14 +15,12 @@ MotionPlan::MotionPlan(CubicBezier bezier, float maxAccel, float maxDeAccel,
 void MotionPlan::generate(float ceiling) {
   float t = 0;
   float v = 0;
-  float totalLength = bezier.arcLength(0, 1);
+  float totalLength = bezier.arcLength(0, 1, true);
   float distanceTravelled = 0;
   while (t <= ceiling) {
-    float deltaDist = t == 0 ? 0 : bezier.arcLength(t - 0.01, t);
-    float derivativeX = bezier.getXDerivative(t);
-    float derivativeY = bezier.getYDerivative(t);
+    float deltaDist = t == 0 ? 0 : bezier.arcLength(t - 0.01, t, false);
     float k = bezier.getCurvature(t);
-    float vCurvature = sqrtf(1.1 * 9.81 * (1.0 / k));
+    float vCurvature = sqrtf(0.8 * 9.81 * (1.0 / k));
     float vMaxAccel = sqrtf(v * v + 2 * maxAccel * deltaDist);
     float vMaxDeAccel =
         sqrtf(0.8 * maxDeAccel * (totalLength - distanceTravelled));

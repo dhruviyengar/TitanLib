@@ -80,6 +80,7 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+
 void autonomous() {
   // CubicBezier bezier(Point(0, 0), Point(40, 40), Point(0, 20), Point(10, 20))
   chassis.setPose(titanlib::Point(0, 0), 90);
@@ -92,8 +93,11 @@ void autonomous() {
 
   float start = pros::millis();
   plan.generate();
+  // printf("%f\n%f", plan.getCurve().arcLength(0, 0.01, true),
+  // plan.getCurve().arcLength(0, 0.01, false));
   printf("%f", pros::millis() - start);
-  //chassis.followPlan(plan);
+  pros::delay(5000);
+  chassis.followPlan(plan);
 }
 
 /**

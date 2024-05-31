@@ -23,7 +23,7 @@ public:
   float getTFromArc(float arc, float tolerance);
   float closestPoint(Point point, float initialGuess, float tolerance);
   float getHeading(float t);
-  float arcLength(float startT, float endT);
+  float arcLength(float startT, float endT, bool useLegendre);
   float getCurvature(float t);
   CubicBezier deCasteljau(float t);
 
