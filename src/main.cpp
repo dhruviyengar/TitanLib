@@ -92,6 +92,7 @@ void autonomous() {
 
   float start = pros::millis();
   plan.generate();
+  printf("%f", pros::millis() - start);
   //chassis.followPlan(plan);
 }
 
