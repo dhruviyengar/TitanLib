@@ -1,6 +1,6 @@
 10TitansLib
 
-Programmers: Dhruv Iyengar, Robert Ren, Sacchin Saravanan and Abhinav Pandey
+Programmers: Dhruv Iyengar, Robert Ren, Ayush Agarwal
 
 Algorithms:
 2D Motion Profiling <br />
